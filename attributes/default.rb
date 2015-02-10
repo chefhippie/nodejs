@@ -19,16 +19,16 @@
 
 default["nodejs"]["packages"] = value_for_platform_family(
   "debian" => value_for_platform(
-    "debian" => %w(
+    "debian" => { "default" => %w(
       nodejs
       nodejs-dev
       nodejs-legacy
-    ),
-    "ubuntu" => %w(
+    ) },
+    "ubuntu" => { "default" => %w(
       nodejs
       nodejs-dev
       npm
-    )
+    ) }
   ),
   "suse" => %w(
     nodejs
@@ -38,8 +38,8 @@ default["nodejs"]["packages"] = value_for_platform_family(
 
 default["nodejs"]["install_npm"] = value_for_platform_family(
   "debian" => value_for_platform(
-    "debian" => true,
-    "ubuntu" => false
+    "debian" => { "default" => true },
+    "ubuntu" => { "default" => false }
   ),
   "suse" => false
 )
