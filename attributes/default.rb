@@ -18,15 +18,17 @@
 #
 
 default["nodejs"]["packages"] = value_for_platform_family(
-  "debian" => %w(
-    nodejs
-    nodejs-dev
-    nodejs-legacy
-  ),
-  "ubuntu" => %w(
-    nodejs
-    nodejs-dev
-    npm
+  "debian" => value_for_platform(
+    "debian" => %w(
+      nodejs
+      nodejs-dev
+      nodejs-legacy
+    ),
+    "ubuntu" => %w(
+      nodejs
+      nodejs-dev
+      npm
+    )
   ),
   "suse" => %w(
     nodejs
@@ -35,11 +37,14 @@ default["nodejs"]["packages"] = value_for_platform_family(
 )
 
 default["nodejs"]["install_npm"] = value_for_platform_family(
-  "debian" => true,
-  "ubuntu" => false,
+  "debian" => value_for_platform(
+    "debian" => true,
+    "ubuntu" => false
+  ),
   "suse" => false
 )
 
+default["nodejs"]["zypper"]["enabled"] = true
 default["nodejs"]["zypper"]["alias"] = "nodejs"
 default["nodejs"]["zypper"]["title"] = "Node.js"
 default["nodejs"]["zypper"]["repo"] = "http://download.opensuse.org/repositories/devel:/languages:/nodejs/openSUSE_#{node["platform_version"]}/"

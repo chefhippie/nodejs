@@ -27,6 +27,10 @@ when "suse"
     title node["nodejs"]["zypper"]["title"]
 
     action :add
+
+    only_if do
+      node["nodejs"]["zypper"]["enabled"]
+    end
   end
 end
 
@@ -54,6 +58,10 @@ when "debian"
 
     cwd Chef::Config[:file_cache_path]
     action :run
+
+    only_if do
+      node["nodejs"]["install_npm"]
+    end
 
     not_if do
       ::File.exists? "/usr/bin/npm"
