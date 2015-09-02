@@ -47,5 +47,5 @@ default["nodejs"]["install_npm"] = value_for_platform_family(
 default["nodejs"]["zypper"]["enabled"] = true
 default["nodejs"]["zypper"]["alias"] = "nodejs"
 default["nodejs"]["zypper"]["title"] = "Node.js"
-default["nodejs"]["zypper"]["repo"] = "http://download.opensuse.org/repositories/devel:/languages:/nodejs/openSUSE_#{node["platform_version"]}/"
+default["nodejs"]["zypper"]["repo"] = "http://download.opensuse.org/repositories/devel:/languages:/nodejs/#{node["platform_version"].to_i.to_s == node["platform_version"] ? "Tumbleweed" : "openSUSE_#{node["platform_version"]}"}/"
 default["nodejs"]["zypper"]["key"] = "#{node["nodejs"]["zypper"]["repo"]}repodata/repomd.xml.key"
