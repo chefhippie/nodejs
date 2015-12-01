@@ -44,8 +44,22 @@ default["nodejs"]["install_npm"] = value_for_platform_family(
   "suse" => false
 )
 
-default["nodejs"]["zypper"]["enabled"] = true
-default["nodejs"]["zypper"]["alias"] = "nodejs"
-default["nodejs"]["zypper"]["title"] = "Node.js"
-default["nodejs"]["zypper"]["repo"] = "http://download.opensuse.org/repositories/devel:/languages:/nodejs/#{node["platform_version"].to_i.to_s == node["platform_version"] ? "Tumbleweed" : "openSUSE_#{node["platform_version"]}"}/"
-default["nodejs"]["zypper"]["key"] = "#{node["nodejs"]["zypper"]["repo"]}repodata/repomd.xml.key"
+case node["platform_family"]
+when "suse"
+  repo = case node["platform_version"]
+  when /\A13\.\d+\z/
+    "openSUSE_#{node["platform_version"]}"
+  when /\A42\.\d+\z/
+    "openSUSE_Leap_#{node["platform_version"]}"
+  when /\A\d{8}\z/
+    "Tumbleweed"
+  else
+    raise "Unsupported SUSE version"
+  end
+
+  default["nodejs"]["zypper"]["enabled"] = true
+  default["nodejs"]["zypper"]["alias"] = "nodejs"
+  default["nodejs"]["zypper"]["title"] = "Node.js"
+  default["nodejs"]["zypper"]["repo"] = "http://download.opensuse.org/repositories/devel:/languages:/nodejs/#{repo}/"
+  default["nodejs"]["zypper"]["key"] = "#{node["nodejs"]["zypper"]["repo"]}repodata/repomd.xml.key"
+end
